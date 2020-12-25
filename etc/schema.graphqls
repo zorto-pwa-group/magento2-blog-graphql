@@ -1,0 +1,110 @@
+type Query {
+    blogPosts (
+        list_type: String @doc(description: "Type of the list posts")
+        identifier: String @doc(description: "Identifier of the page, includes home, category, tag or search")
+        page_id: Int @doc(description: "Page Ofset")
+    ): PostRecords @resolver(class: "ZT\\BlogGraphQl\\Model\\Resolver\\BlogPosts") @doc(description: "Retrieve list of blog's posts.")
+    recentPosts (
+        list_type: String @doc(description: "Type of the list posts")
+        page_id: Int @doc(description: "Ofset of list posts")
+    ): PostRecords @resolver(class: "ZT\\BlogGraphQl\\Model\\Resolver\\BlogPosts") @doc(description: "Retrieve blog's recent posts.")
+    popularPosts (
+        list_type: String @doc(description: "Type of the list posts")
+        page_id: Int @doc(description: "Ofset of list posts")
+    ): PostRecords @resolver(class: "ZT\\BlogGraphQl\\Model\\Resolver\\BlogPosts") @doc(description: "Retrieve blog's popular posts.")
+    blogCategories (
+        list_type: String @doc(description: "Type of the list categories")
+        page_id: Int @doc(description: "Ofset of list categories")
+    ): CategoryRecords @resolver(class: "ZT\\BlogGraphQl\\Model\\Resolver\\BlogCategories") @doc(description: "Retrieve blog's categories.")
+    blogMenu (
+        list_type: String @doc(description: "Type of the list categories")
+        page_id: Int @doc(description: "Ofset of list categories")
+    ): MenuRecords @resolver(class: "ZT\\BlogGraphQl\\Model\\Resolver\\BlogCategories") @doc(description: "Retrieve blog's menu.")
+    blogTags (
+        list_type: String @doc(description: "Type of the list tags")
+        page_id: Int @doc(description: "Ofset of list tags")
+    ): TagRecords @resolver(class: "ZT\\BlogGraphQl\\Model\\Resolver\\BlogTags") @doc(description: "Retrieve blog's tags.")
+    blogPostTags (
+        list_type: String @doc(description: "Type of the list tags")
+        page_id: String @doc(description: "Post identifier")
+    ): TagRecords @resolver(class: "ZT\\BlogGraphQl\\Model\\Resolver\\BlogTags") @doc(description: "Retrieve blog's tags.")
+    blogPost (
+        identifier: String @doc(description: "Post Identifier")
+    ): PostRecord @resolver(class: "ZT\\BlogGraphQl\\Model\\Resolver\\BlogPost") @doc(description: "Retrieve blog's post data.")
+    blogCategory (
+        identifier: String @doc(description: "Category Identifier")
+    ): CategoryRecord @resolver(class: "ZT\\BlogGraphQl\\Model\\Resolver\\BlogCategory") @doc(description: "Retrieve blog's category data by id.")
+    blogTag (
+        identifier: String @doc(description: "Tag Identifier")
+    ): TagRecord @resolver(class: "ZT\\BlogGraphQl\\Model\\Resolver\\BlogTag") @doc(description: "Retrieve blog's tag data by id.")
+    themeSettings (
+        code: String @doc(description: "Theme Identifier")
+    ) : ThemeSetting @resolver(class: "ZT\\BlogGraphQl\\Model\\Resolver\\ThemeSetting") @doc(description: "Retrieve list of theme setting.") @cache(cacheable: false)
+}
+
+type PostRecords @doc(description: "Blog post information") {
+    posts: [PostRecord] @doc(description: "An array of blog posts")
+    totalCount: Int @doc(description: "Number of blog posts")
+}
+
+type PostRecord {
+    title: String @doc(description: "Retrieve title of Blog post")
+    identifier: String @doc(description: "Retrieve identifier of Blog post")
+    content: String @doc(description: "Retrieve content of Blog post")
+    update_time: String @doc(description: "Retrieve updated time of Blog post")
+    creation_time: String @doc(description: "Retrieve creation time of Blog post")
+    publish_time: String @doc(description: "Retrieve publish time of Blog post")
+    featured_img: String @doc(description: "Retrieve feature image of Blog post")
+    author: String @doc(description: "Retrieve author name of Blog post")
+    short_content: String @doc(description: "Retrieve short content of Blog post")
+}
+
+type CategoryRecords @doc(description: "Blog category information") {
+    categories: [CategoryRecord] @doc(description: "An array of blog categories")
+}
+type MenuRecords @doc(description: "Blog category information") {
+    menus: [CategoryRecord] @doc(description: "An array of blog categories")
+}
+
+type CategoryRecord {
+    title: String @doc(description: "Retrieve title of Blog category")
+    identifier: String @doc(description: "Retrieve identifier of Blog category")
+    content: String @doc(description: "Retrieve content of Blog category")
+    content_heading: String @doc(description: "Retrieve content_heading of Blog category")
+    include_in_menu: String @doc(description: "Retrieve include_in_menu of Blog category")
+    is_active: String @doc(description: "Retrieve is_active of Blog category")
+}
+
+type TagRecords @doc(description: "Blog tag information") {
+    tags: [TagRecord] @doc(description: "An array of blog tags")
+}
+
+type TagRecord {
+    title: String @doc(description: "Retrieve title of Blog post")
+    identifier: String @doc(description: "Retrieve identifier of Blog post")
+    content: String @doc(description: "Retrieve content of Blog post")
+    is_active: String @doc(description: "Retrieve is_active of Blog post")
+}
+
+type ThemeSetting @doc(description: "The type contains information about a store config") {
+    title : String @doc(description: "PWA Blog Title")
+    description : String @doc(description: "PWA Blog Short Description")
+    logo_url : String @doc(description: "PWA Blog Logo Url")
+    collapse_logo_url : String @doc(description: "PWA Blog Collapse Logo Url")
+    email_contact : String @doc(description: "PWA Blog Email Contact")
+    phone_contact : String @doc(description: "PWA Blog Phone Contact")
+    store_address : String @doc(description: "Retrieve store address")
+    main_banner : String @doc(description: "PWA Blog Main Banner")
+    banner_title : String @doc(description: "PWA Blog Banner Title")
+    banner_description : String @doc(description: "PWA Blog Banner Description")
+    widget_one_title : String @doc(description: "Title of widget one")
+    widget_one_text : String @doc(description: "Desc of widget one")
+    widget_two_title : String @doc(description: "Title of widget two")
+    widget_two_text : String @doc(description: "Desc of widget two")
+    footer_copyright : String @doc(description: "PWA Blog Footer Copyright")
+    facebook_url : String @doc(description: "PWA Blog Facebook")
+    twitter : String @doc(description: "PWA Blog Twitter")
+    instagram : String @doc(description: "PWA Blog Instagram")
+    linkedin : String @doc(description: "PWA Blog Linkedin")
+    ga_code : String @doc(description: "Google Analytic code")
+}
